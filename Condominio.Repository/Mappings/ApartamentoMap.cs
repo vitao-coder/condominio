@@ -9,7 +9,8 @@ namespace Condominio.Repository.Mappings
         public void Configure(EntityTypeBuilder<Apartamento> builder)
         {
             builder.ToTable(nameof(Apartamento))
-                .HasMany(c => c.Moradores); ;
+                .HasMany(c => c.Moradores);
+
         }
     }
 }

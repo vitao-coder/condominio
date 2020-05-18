@@ -27,10 +27,10 @@ namespace Condominio.Repository.Contracts
 
         public Task<TEntity> GetAsync(long Id, bool asNoTracking = true);
 
-        public Task DeleteAsync(Guid id);
+        public Task DeleteAsync(long id);
 
         public Task DeleteAsync(TEntity entity);
 
-        public Task DeleteAsync(Func<TEntity, bool> where);
+        public Task DeleteAsync(IEnumerable<TEntity> entities);
     }
 }

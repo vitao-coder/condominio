@@ -22,7 +22,8 @@ namespace Condominio.Repository.Tests.Fixtures
                 .WithParameters(
                 new[]{
                     new NamedParameter("connectionString","Server=localhost; Database=condominiodb; Uid=root; Pwd=senha;")
-                }).InstancePerLifetimeScope();
+                })
+                .InstancePerDependency().InstancePerLifetimeScope();//instance per dependecy and per lifetimescope to resolve injection in unit tests
 
             //
             builder.RegisterGeneric(typeof(BaseRepository<>))

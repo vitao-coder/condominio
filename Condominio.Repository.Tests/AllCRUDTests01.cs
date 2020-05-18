@@ -38,11 +38,24 @@ namespace Condominio.Repository.Tests
             var addBloco = _blocoRepository.AddAsync(blocoAdd);
             Assert.True(addBloco.IsCompletedSuccessfully);
 
+            //Add Bloco
+            var blocoAdd2 = new Bloco()
+            { Descricao = "Bloco B" };
+            var addBloco2 = _blocoRepository.AddAsync(blocoAdd2);
+            Assert.True(addBloco2.IsCompletedSuccessfully);
+
             //Add Apartamento
             var apartamentoAdd= new Apartamento() 
             {Bloco = blocoAdd, Numero = 1,Moradores = new List<Morador>()};
             var addApartamento = _apartamentoRepository.AddAsync(apartamentoAdd);
             Assert.True(addApartamento.IsCompletedSuccessfully);
+
+
+            //Add Apartamento
+            var apartamentoAdd2 = new Apartamento()
+            { Bloco = blocoAdd2, Numero = 125, Moradores = new List<Morador>() };
+            var addApartamento2 = _apartamentoRepository.AddAsync(apartamentoAdd);
+            Assert.True(addApartamento2.IsCompletedSuccessfully);
 
             //Add Moradores
             var moradoresAdd = new List<Morador>();
@@ -61,7 +74,6 @@ namespace Condominio.Repository.Tests
             var saveChanges = _mainContext.SaveChangesAsync();
             Assert.True(saveChanges.IsCompletedSuccessfully);
         }
-
 
         [Fact]
         public void T2Update()
@@ -88,6 +100,9 @@ namespace Condominio.Repository.Tests
             string nomeUpd = "Vitão Updated";
             var moradorUpd = aptoUpd.Moradores.FirstOrDefault();
             moradorUpd.NomeCompleto = nomeUpd;
+            var updMorador = _moradorRepository.UpdateAsync(moradorUpd);
+            Assert.True(updMorador.IsCompletedSuccessfully);
+            long idMoradorUpd = moradorUpd.Id;
 
             //Save Changes
             var saveChanges = _mainContext.SaveChangesAsync();
@@ -100,18 +115,51 @@ namespace Condominio.Repository.Tests
             //test apto updated data
             var aptoUpdated = _apartamentoRepository.GetAsync(idAptoUpd).Result;
             Assert.Equal(numeroUpd, aptoUpdated.Numero);
+
+            //test morador updated data
+            var moradorUpdated = _moradorRepository.GetAsync(idMoradorUpd).Result;
+            Assert.Equal(nomeUpd, moradorUpd.NomeCompleto);
         }
 
         [Fact]
-        public long T3Get()
+        public void T3Get()
         {
-            long returnLong = 1;
-            return returnLong;
+            var getAllBlocos = _blocoRepository.GetAsync().Result;
+            int contBlocos = getAllBlocos.Count();
+            Assert.True((contBlocos > 1));
+
+            var getAllAptos = _apartamentoRepository.GetAsync().Result;
+            int contAptos = getAllAptos.Count();
+            Assert.True((contAptos > 1));
+
+            var getAllMoradores = _moradorRepository.GetAsync().Result;
+            int contMoradores = getAllMoradores.Count();
+            Assert.True((contMoradores > 1));
         }
-        public long T4Delete()
+
+        [Fact]
+        public void T4Delete()
         {
-            long returnLong = 1;
-            return returnLong;
+            //morador delete            
+            var moradoresDelete = _moradorRepository
+                .GetQueryable(it => it.NomeCompleto.Contains("Vitão"))                
+                .Take(10).ToList();            
+            var moradorDeleteWhere = _moradorRepository.DeleteAsync(moradoresDelete);
+            Assert.Equal(Task.CompletedTask, moradorDeleteWhere);
+
+            //apto delete
+            var aptoDeleteEntity = _apartamentoRepository.GetAsync(it=>it.Numero==125).Result;            
+            var delAptoEntity = _apartamentoRepository.DeleteAsync(aptoDeleteEntity);
+            Assert.Equal(Task.CompletedTask, delAptoEntity);
+
+            //bloco delete
+            var blocoDeleteEntity = _blocoRepository.GetAsync(it => it.Descricao == "Bloco B").Result.FirstOrDefault();
+            var delBlocoById = _blocoRepository.DeleteAsync(blocoDeleteEntity.Id);
+            Assert.Equal(Task.CompletedTask, delBlocoById);
+
+            //Save Changes
+            var saveChanges = _mainContext.SaveChangesAsync();
+            Assert.True(saveChanges.IsCompletedSuccessfully);
         }
     }
 }

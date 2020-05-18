@@ -57,6 +57,7 @@ namespace Condominio.Repository
                 ? DbSet.AsNoTracking().Where(where)
                 : DbSet.Where(where);
         }
+
         public virtual async Task<IEnumerable<TEntity>> GetAsync(bool asNoTracking = true)
         {
             return asNoTracking
@@ -71,7 +72,7 @@ namespace Condominio.Repository
                 : await DbSet.FindAsync(Id).ConfigureAwait(false);
         }
 
-        public virtual Task DeleteAsync(Guid Id)
+        public virtual Task DeleteAsync(long Id)
         {
             var existing = DbSet.Find(Id);
             if (existing != null) DbSet.Remove(existing);
@@ -84,9 +85,9 @@ namespace Condominio.Repository
             return Task.CompletedTask;
         }
 
-        public virtual Task DeleteAsync(Func<TEntity, bool> where)
+        public virtual Task DeleteAsync(IEnumerable<TEntity> entities)
         {
-            DbSet.RemoveRange(DbSet.ToList().Where(where));
+            DbSet.RemoveRange(entities.ToList());
             return Task.CompletedTask;
         }
 

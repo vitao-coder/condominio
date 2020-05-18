@@ -11,7 +11,7 @@ namespace Condominio.Model
 
         public string Fone { get; set; }
             
-        public int Cpf { get; set; }
+        public int? Cpf { get; set; }
 
         public Apartamento Apartamento { get; set; }
 
