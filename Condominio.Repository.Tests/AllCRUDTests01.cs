@@ -104,6 +104,20 @@ namespace Condominio.Repository.Tests
             Assert.True(updMorador.IsCompletedSuccessfully);
             long idMoradorUpd = moradorUpd.Id;
 
+            //Upd moradores
+            var rangeMoradores = aptoUpd.Moradores.Where(it => it.Id != moradorUpd.Id);
+            string nomeUpdRange = "Vitão Updated Range";
+            int contUpd = 0;
+            var rangeUpdate = new List<Morador>();
+            foreach (var morador in rangeMoradores)
+            {
+                morador.NomeCompleto = nomeUpdRange + " "+ contUpd.ToString();
+                rangeUpdate.Add(morador);
+                contUpd++;
+            }
+            var updMoradores = _moradorRepository.UpdateAsync(rangeUpdate);
+            Assert.True(updMoradores.IsCompletedSuccessfully);
+
             //Save Changes
             var saveChanges = _mainContext.SaveChangesAsync();
             Assert.True(saveChanges.IsCompletedSuccessfully);
