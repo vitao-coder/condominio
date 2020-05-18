@@ -46,12 +46,22 @@ namespace Condominio.Repository
 
         public virtual async Task<IEnumerable<TEntity>> GetAsync(Expression<Func<TEntity, bool>> where, bool asNoTracking = true)
         {
-            return await DbSet.AsNoTracking().Where(where).ToListAsync().ConfigureAwait(false);
+            return asNoTracking
+                ? await DbSet.AsNoTracking().Where(where).ToListAsync().ConfigureAwait(false)
+                : await DbSet.Where(where).ToListAsync().ConfigureAwait(false);
         }
 
+        public virtual IQueryable<TEntity> GetQueryable(Expression<Func<TEntity, bool>> where, bool asNoTracking = true)
+        {
+            return asNoTracking
+                ? DbSet.AsNoTracking().Where(where)
+                : DbSet.Where(where);
+        }
         public virtual async Task<IEnumerable<TEntity>> GetAsync(bool asNoTracking = true)
         {
-            return await DbSet.AsNoTracking().ToListAsync().ConfigureAwait(false);
+            return asNoTracking
+                ? await DbSet.AsNoTracking().ToListAsync().ConfigureAwait(false)
+                : await DbSet.ToListAsync().ConfigureAwait(false);
         }
 
         public virtual async Task<TEntity> GetAsync(long Id, bool asNoTracking = true)

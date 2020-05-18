@@ -21,6 +21,8 @@ namespace Condominio.Repository.Contracts
 
         public Task<IEnumerable<TEntity>> GetAsync(Expression<Func<TEntity, bool>> where, bool asNoTracking = true);
 
+        public IQueryable<TEntity> GetQueryable(Expression<Func<TEntity, bool>> where, bool asNoTracking = true);
+
         public Task<IEnumerable<TEntity>> GetAsync(bool asNoTracking = true);
 
         public Task<TEntity> GetAsync(long Id, bool asNoTracking = true);
