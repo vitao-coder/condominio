@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace Condominio.Repository.Mappings
 {
-    public class MoradorMap : IEntityTypeConfiguration<Morador>
+    public class MoradorMap : BaseMap, IEntityTypeConfiguration<Morador>
     {
         public void Configure(EntityTypeBuilder<Morador> builder)
         {

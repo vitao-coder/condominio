@@ -5,7 +5,10 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Condominio.Model\Condominio.Model.csproj" />
+    <PackageReference Include="Autofac" Version="5.2.0" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\Condominio.Repository\Condominio.Repository.csproj" />
   </ItemGroup>
 

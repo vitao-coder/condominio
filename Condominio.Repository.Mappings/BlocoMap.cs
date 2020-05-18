@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 namespace Condominio.Repository.Mappings
 {
 
-    public class BlocoMap : IEntityTypeConfiguration<Bloco>
+    public class BlocoMap : BaseMap, IEntityTypeConfiguration<Bloco>
     {
         public void Configure(EntityTypeBuilder<Bloco> builder)
         {

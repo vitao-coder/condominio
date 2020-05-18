@@ -1,9 +1,9 @@
 ﻿using Autofac;
-using Condominio.Repository.Contracts;
 using Condominio.Repository;
+using Condominio.Repository.Contracts;
+using System;
 
-
-namespace Condominio.Repository.Tests.Fixtures
+namespace Condominio.Fixtures
 {
     public class IocFixture
     {
@@ -22,8 +22,7 @@ namespace Condominio.Repository.Tests.Fixtures
                 .WithParameters(
                 new[]{
                     new NamedParameter("connectionString","Server=localhost; Database=condominiodb; Uid=root; Pwd=senha;")
-                })
-                .InstancePerDependency().InstancePerLifetimeScope();//instance per dependecy and per lifetimescope to resolve injection in unit tests
+                }).InstancePerLifetimeScope();
 
             //
             builder.RegisterGeneric(typeof(BaseRepository<>))

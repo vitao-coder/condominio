@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace Condominio.Repository.Mappings
 {
-    public class ApartamentoMap : IEntityTypeConfiguration<Apartamento>
+    public class ApartamentoMap : BaseMap,IEntityTypeConfiguration<Apartamento>
     {
         public void Configure(EntityTypeBuilder<Apartamento> builder)
         {

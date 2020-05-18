@@ -15,3 +15,9 @@
 /Condominio.Repository/bin/Debug/netcoreapp3.1
 /Condominio.Repository.Tests/obj
 /Condominio.Repository.Tests/bin/Debug/netcoreapp3.1
+/Condominio.Fixture/bin/Debug/netcoreapp3.1
+/Condominio.Fixture/obj
+/Condominio.Repository.Mappings/bin/Debug/netcoreapp3.1
+/Condominio.Repository.Mappings/obj
+/Condominio.Services.Tests/bin/Debug/netcoreapp3.1
+/Condominio.Services.Tests/obj

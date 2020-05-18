@@ -17,9 +17,7 @@ namespace Condominio.Repository
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {            
             base.OnModelCreating(modelBuilder);
-            modelBuilder.ApplyConfiguration(new ApartamentoMap());
-            modelBuilder.ApplyConfiguration(new BlocoMap());
-            modelBuilder.ApplyConfiguration(new BlocoMap());
+            modelBuilder.ApplyConfigurationsFromAssembly(typeof(BaseMap).Assembly);
         }
 
         public DbSet<TEntity> GetSet<TEntity>() where TEntity : BaseEntity => Set<TEntity>();

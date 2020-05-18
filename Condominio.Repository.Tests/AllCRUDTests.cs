@@ -1,5 +1,4 @@
 using Xunit;
-using Condominio.Repository.Tests.Fixtures;
 using Condominio.Repository.Contracts;
 using Condominio.Model;
 using Autofac;
@@ -8,10 +7,11 @@ using System.Collections.Generic;
 using System;
 using System.Linq;
 using Microsoft.EntityFrameworkCore;
+using Condominio.Fixtures;
 
 namespace Condominio.Repository.Tests
 {
-    public class AllCRUDTests01 : IClassFixture<IocFixture>
+    public class AllCRUDTests : IClassFixture<IocFixture>
     {
         readonly IocFixture _iocFixture;
 
@@ -20,7 +20,7 @@ namespace Condominio.Repository.Tests
         IBaseRepository<Morador> _moradorRepository;
         IMainContext _mainContext;
 
-        public AllCRUDTests01(IocFixture iocFixture)
+        public AllCRUDTests(IocFixture iocFixture)
         {
             _iocFixture = iocFixture;
             _mainContext = iocFixture.Container.Resolve<IMainContext>();
