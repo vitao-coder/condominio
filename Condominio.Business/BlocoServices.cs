@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
+using System.Threading.Tasks;
 using Condominio.Model;
 using Condominio.Repository.Contracts;
 using Condominio.Services.Contracts;
@@ -16,6 +18,11 @@ namespace Condominio.Services
         {
             _blocoRepository = blocoRepository;
             _mainContext = mainContext;
+        }
+
+        public List<Bloco> ListarTodosBlocosAsync()
+        {
+            return  _blocoRepository.GetAsync().Result.ToList();
         }
     }
 }

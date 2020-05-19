@@ -4,6 +4,7 @@ using System.Text;
 using Condominio.Services.Contracts;
 using Condominio.Repository.Contracts;
 using Condominio.Model;
+using System.Linq;
 
 namespace Condominio.Services
 {
@@ -16,6 +17,29 @@ namespace Condominio.Services
         {
             _apartamentoRepository = apartamentoRepository;
             _mainContext = mainContext;
+        }
+
+        public List<Apartamento> ListarTodosBlocosAsync()
+        {
+            return _apartamentoRepository.GetAsync().Result.ToList();
+        }
+
+        public bool AdicionarApartamento(Apartamento apartamento)
+        {
+            var taskAdicionar = _apartamentoRepository.AddAsync(apartamento);            
+            return taskAdicionar.IsCompletedSuccessfully;
+        }
+
+        public bool AlterarApartamento(Apartamento apartamento)
+        {
+            var taskAlterar = _apartamentoRepository.UpdateAsync(apartamento);
+            return taskAlterar.IsCompletedSuccessfully;
+        }
+
+        public bool ExcluirApartamento(long idApartamento)
+        {
+            var taskExcluir = _apartamentoRepository.DeleteAsync(idApartamento);
+            return taskExcluir.IsCompletedSuccessfully;
         }
     }
 }
