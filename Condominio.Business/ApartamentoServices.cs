@@ -22,7 +22,7 @@ namespace Condominio.Services
 
         public List<Apartamento> ListarTodosApartamentos()
         {
-            return _apartamentoRepository.GetQueryable(it => it != null).Include(it => it.Moradores).ToList();
+            return _apartamentoRepository.GetQueryable(it => it != null).Include(it => it.Moradores).Include(it=>it.Bloco).ToList();
         }
 
         public bool AdicionarApartamento(Apartamento apartamento)

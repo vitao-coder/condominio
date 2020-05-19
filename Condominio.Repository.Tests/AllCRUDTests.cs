@@ -11,22 +11,22 @@ using Condominio.Fixtures;
 
 namespace Condominio.Repository.Tests
 {
-    public class AllCRUDTests : IClassFixture<IocFixture>
+    public class AllCRUDTests : IClassFixture<IocFixtureForTests>
     {
-        readonly IocFixture _iocFixture;
+        readonly IocFixtureForTests _iocFixture;
 
         IBaseRepository<Apartamento> _apartamentoRepository;
         IBaseRepository<Bloco> _blocoRepository;
         IBaseRepository<Morador> _moradorRepository;
         IMainContext _mainContext;
 
-        public AllCRUDTests(IocFixture iocFixture)
-        {
-            _iocFixture = iocFixture;
-            _mainContext = iocFixture.Container.Resolve<IMainContext>();
-            _apartamentoRepository = iocFixture.Container.Resolve<IBaseRepository<Apartamento>>();
-            _blocoRepository = iocFixture.Container.Resolve<IBaseRepository<Bloco>>();
-            _moradorRepository = iocFixture.Container.Resolve<IBaseRepository<Morador>>();            
+        public AllCRUDTests(IocFixtureForTests iocFixture)
+        {              
+            _iocFixture = iocFixture;            
+            _mainContext = _iocFixture.Container.Resolve<IMainContext>();
+            _apartamentoRepository = _iocFixture.Container.Resolve<IBaseRepository<Apartamento>>();
+            _blocoRepository = _iocFixture.Container.Resolve<IBaseRepository<Bloco>>();
+            _moradorRepository = _iocFixture.Container.Resolve<IBaseRepository<Morador>>();            
         }
 
         [Fact]

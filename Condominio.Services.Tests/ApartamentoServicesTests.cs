@@ -10,18 +10,18 @@ using Xunit;
 
 namespace Condominio.Services.Tests
 {
-    public class ApartamentoServicesTests : IClassFixture<IocFixture>
+    public class ApartamentoServicesTests : IClassFixture<IocFixtureForTests>
     {
 
-        readonly IocFixture _iocFixture;
+        readonly IocFixtureForTests _iocFixture;
 
         IApartamentoServices _apartamentoServices;
 
         IMainContext _mainContext;
 
-        public ApartamentoServicesTests(IocFixture iocFixture)
+        public ApartamentoServicesTests(IocFixtureForTests iocFixture)
         {
-            _iocFixture = iocFixture;
+            _iocFixture = iocFixture;            
             _apartamentoServices = iocFixture.Container.Resolve<IApartamentoServices>();
             _mainContext = iocFixture.Container.Resolve<IMainContext>();
         }

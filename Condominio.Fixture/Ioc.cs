@@ -4,22 +4,15 @@ using Condominio.Repository.Contracts;
 using Condominio.Services;
 using Condominio.Services.Contracts;
 using System;
+using System.Collections.Generic;
+using System.Text;
 
 namespace Condominio.Fixtures
 {
-    public class IocFixture
+    public static class Ioc
     {
-        public IContainer Container { get; private set; }
 
-        public IocFixture()
-        {
-            ContainerBuilder builder = new ContainerBuilder();
-            builder = RegisterIocMySqlRepository(builder);
-            builder = RegisterIocServices(builder);
-            Container = builder.Build();
-        }
-
-        private ContainerBuilder RegisterIocMySqlRepository(ContainerBuilder builder)
+        public static ContainerBuilder RegisterIocMySqlRepository(ContainerBuilder builder)
         {
             builder.RegisterType<MainContext>().As<IMainContext>()
                 .WithParameters(
@@ -40,7 +33,7 @@ namespace Condominio.Fixtures
             return builder;
         }
 
-        private ContainerBuilder RegisterIocServices(ContainerBuilder builder)
+        public static ContainerBuilder RegisterIocServices(ContainerBuilder builder)
         {
             builder.RegisterType<MoradorServices>().As<IMoradorServices>()
                 .InstancePerLifetimeScope();

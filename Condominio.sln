@@ -21,11 +21,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Condominio.BaseModel", "Con
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Condominio.Repository.Tests", "Condominio.Repository.Tests\Condominio.Repository.Tests.csproj", "{D03E7E42-E07F-431F-B195-CF3404360C75}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Condominio.Services.Tests", "Condominio.Services.Tests\Condominio.Services.Tests.csproj", "{6EE477B8-76DD-4D3D-B68B-437424F02D1D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Condominio.Services.Tests", "Condominio.Services.Tests\Condominio.Services.Tests.csproj", "{6EE477B8-76DD-4D3D-B68B-437424F02D1D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Condominio.Fixtures", "Condominio.Fixture\Condominio.Fixtures.csproj", "{7A11EBD7-AF24-420A-BE14-F06B267234AD}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Condominio.Fixtures", "Condominio.Fixture\Condominio.Fixtures.csproj", "{7A11EBD7-AF24-420A-BE14-F06B267234AD}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Condominio.Repository.Mappings", "Condominio.Repository.Mappings\Condominio.Repository.Mappings.csproj", "{15080A39-167F-4FE3-AC82-379150CCEB46}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Condominio.Repository.Mappings", "Condominio.Repository.Mappings\Condominio.Repository.Mappings.csproj", "{15080A39-167F-4FE3-AC82-379150CCEB46}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

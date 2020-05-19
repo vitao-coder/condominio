@@ -6,17 +6,18 @@ using Xunit;
 
 namespace Condominio.Services.Tests
 {
-    public class BlocoServicesTests : IClassFixture<IocFixture>
+    public class BlocoServicesTests : IClassFixture<IocFixtureForTests>
     {
-        readonly IocFixture _iocFixture;
+        readonly IocFixtureForTests _iocFixture;
 
         IBlocoServices _blocoServices;
         IMainContext _mainContext;
 
-        public BlocoServicesTests(IocFixture iocFixture)
+        public BlocoServicesTests(IocFixtureForTests iocFixture)
         {
-            _blocoServices = iocFixture.Container.Resolve<IBlocoServices>();
-            _mainContext = iocFixture.Container.Resolve<IMainContext>();
+            _iocFixture = iocFixture;            
+            _blocoServices = _iocFixture.Container.Resolve<IBlocoServices>();
+            _mainContext = _iocFixture.Container.Resolve<IMainContext>();
         }
 
         [Fact]
