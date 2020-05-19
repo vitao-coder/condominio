@@ -4,5 +4,10 @@
     <TargetFramework>netcoreapp3.1</TargetFramework>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\Condominio.Business\Condominio.Services.csproj" />
+    <ProjectReference Include="..\Condominio.Model\Condominio.Model.csproj" />
+  </ItemGroup>
+
 
 </Project>
