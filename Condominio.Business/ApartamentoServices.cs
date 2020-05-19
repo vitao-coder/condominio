@@ -5,6 +5,7 @@ using Condominio.Services.Contracts;
 using Condominio.Repository.Contracts;
 using Condominio.Model;
 using System.Linq;
+using Microsoft.EntityFrameworkCore;
 
 namespace Condominio.Services
 {
@@ -19,9 +20,9 @@ namespace Condominio.Services
             _mainContext = mainContext;
         }
 
-        public List<Apartamento> ListarTodosBlocosAsync()
+        public List<Apartamento> ListarTodosApartamentos()
         {
-            return _apartamentoRepository.GetAsync().Result.ToList();
+            return _apartamentoRepository.GetQueryable(it => it != null).Include(it => it.Moradores).ToList();
         }
 
         public bool AdicionarApartamento(Apartamento apartamento)

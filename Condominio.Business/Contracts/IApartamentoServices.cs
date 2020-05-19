@@ -1,10 +1,13 @@
-﻿using System;
+﻿using Condominio.Model;
 using System.Collections.Generic;
-using System.Text;
 
 namespace Condominio.Services.Contracts
 {
     public interface IApartamentoServices
     {
+        public List<Apartamento> ListarTodosApartamentos();
+        public bool AdicionarApartamento(Apartamento apartamento);
+        public bool AlterarApartamento(Apartamento apartamento);
+        public bool ExcluirApartamento(long idApartamento);
     }
 }

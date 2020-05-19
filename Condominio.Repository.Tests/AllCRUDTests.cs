@@ -50,7 +50,6 @@ namespace Condominio.Repository.Tests
             var addApartamento = _apartamentoRepository.AddAsync(apartamentoAdd);
             Assert.True(addApartamento.IsCompletedSuccessfully);
 
-
             //Add Apartamento
             var apartamentoAdd2 = new Apartamento()
             { Bloco = blocoAdd2, Numero = 125, Moradores = new List<Morador>() };

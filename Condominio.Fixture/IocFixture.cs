@@ -1,6 +1,8 @@
 ﻿using Autofac;
 using Condominio.Repository;
 using Condominio.Repository.Contracts;
+using Condominio.Services;
+using Condominio.Services.Contracts;
 using System;
 
 namespace Condominio.Fixtures
@@ -13,6 +15,7 @@ namespace Condominio.Fixtures
         {
             ContainerBuilder builder = new ContainerBuilder();
             builder = RegisterIocMySqlRepository(builder);
+            builder = RegisterIocServices(builder);
             Container = builder.Build();
         }
 
@@ -33,6 +36,20 @@ namespace Condominio.Fixtures
 
             builder.RegisterAssemblyTypes(assemblyType)
                 .AsClosedTypesOf(typeof(IBaseRepository<>));
+
+            return builder;
+        }
+
+        private ContainerBuilder RegisterIocServices(ContainerBuilder builder)
+        {
+            builder.RegisterType<MoradorServices>().As<IMoradorServices>()
+                .InstancePerLifetimeScope();
+
+            builder.RegisterType<ApartamentoServices>().As<IApartamentoServices>()
+                .InstancePerLifetimeScope();
+
+            builder.RegisterType<BlocoServices>().As<IBlocoServices>()
+                .InstancePerLifetimeScope();
 
             return builder;
         }

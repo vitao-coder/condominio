@@ -25,23 +25,6 @@ namespace Condominio.Services
             return _moradorRepository.GetAsync(it => it.Apartamento.Id == idApartamento).Result.ToList();
         }
 
-        public bool AdicionarMorador(Morador morador)
-        {
-            var taskAdicionar = _moradorRepository.AddAsync(morador);
-            return taskAdicionar.IsCompletedSuccessfully;
-        }
-        public bool AlterarMorador(Morador morador)
-        {
-            var taskAlterar = _moradorRepository.UpdateAsync(morador);
-            return taskAlterar.IsCompletedSuccessfully;
-        }
-
-        public bool ExcluirMorador(long idMorador)
-        {
-            var taskExcluir = _moradorRepository.DeleteAsync(idMorador);
-            return taskExcluir.IsCompletedSuccessfully;
-        }
-
         public List<Morador> BuscarMoradoresPorFiltro(FiltroBuscaMorador filtroBusca, string valorFiltro)
         {
             List<Morador> listRetorno = new List<Morador>();
@@ -53,19 +36,37 @@ namespace Condominio.Services
                     break;
                 case FiltroBuscaMorador.DataNascimento:
                     DateTime filtroData;
-                    if (DateTime.TryParse(valorFiltro,out filtroData)) 
+                    if (DateTime.TryParse(valorFiltro, out filtroData))
                         listRetorno = _moradorRepository.GetAsync(it => it.DataNascimento == filtroData).Result.ToList();
                     break;
                 case FiltroBuscaMorador.Cpf:
                     int filtroCpf;
-                    if(int.TryParse(valorFiltro,out filtroCpf)) 
+                    if (int.TryParse(valorFiltro, out filtroCpf))
                         listRetorno = _moradorRepository.GetAsync(it => it.Cpf == filtroCpf).Result.ToList();
                     break;
-                default:                    
+                default:
                     break;
             }
             return listRetorno;
 
+        }
+
+        public bool AdicionarMorador(Morador morador)
+        {
+            var taskAdicionar = _moradorRepository.AddAsync(morador);
+            return taskAdicionar.IsCompletedSuccessfully;
+        }
+
+        public bool AlterarMorador(Morador morador)
+        {
+            var taskAlterar = _moradorRepository.UpdateAsync(morador);
+            return taskAlterar.IsCompletedSuccessfully;
+        }
+
+        public bool ExcluirMorador(long idMorador)
+        {
+            var taskExcluir = _moradorRepository.DeleteAsync(idMorador);
+            return taskExcluir.IsCompletedSuccessfully;
         }
 
         public enum FiltroBuscaMorador

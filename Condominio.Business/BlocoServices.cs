@@ -20,7 +20,7 @@ namespace Condominio.Services
             _mainContext = mainContext;
         }
 
-        public List<Bloco> ListarTodosBlocosAsync()
+        public List<Bloco> ListarTodosBlocos()
         {
             return  _blocoRepository.GetAsync().Result.ToList();
         }
