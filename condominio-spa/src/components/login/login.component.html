@@ -1,0 +1,25 @@
+<div class="container">
+  <mat-card>
+    <mat-card-title>Condominio</mat-card-title>
+    <mat-card-content>
+      <form [formGroup]="form" (ngSubmit)="login()">
+        <p>
+          <mat-form-field>
+            <mat-label>Usuário</mat-label>
+            <input matNativeControl type="text" formControlName="username" placeholder="Ex: vitor"/>
+          </mat-form-field>
+        </p>
+        <p>
+          <mat-form-field >
+            <mat-label>Senha</mat-label>
+            <input matNativeControl type="password" formControlName="password" name="password" />
+          </mat-form-field>
+        </p>
+        <div class="button">
+          <button [disabled]="loading" mat-button type="submit">Login</button>
+        </div>
+      </form>
+    </mat-card-content>
+    <div class="error"><p *ngIf="error">{{error}}</p></div>
+  </mat-card>
+</div>

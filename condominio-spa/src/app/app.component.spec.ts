@@ -20,16 +20,16 @@ describe('AppComponent', () => {
     expect(app).toBeTruthy();
   });
 
-  it(`should have as title 'condominio-spa'`, () => {
+  it(`should have as title 'wolkie-ui'`, () => {
     const fixture = TestBed.createComponent(AppComponent);
     const app = fixture.componentInstance;
-    expect(app.title).toEqual('condominio-spa');
+    expect(app.title).toEqual('wolkie-ui');
   });
 
   it('should render title', () => {
     const fixture = TestBed.createComponent(AppComponent);
     fixture.detectChanges();
     const compiled = fixture.nativeElement;
-    expect(compiled.querySelector('.content span').textContent).toContain('condominio-spa app is running!');
+    expect(compiled.querySelector('.content span').textContent).toContain('wolkie-ui app is running!');
   });
 });

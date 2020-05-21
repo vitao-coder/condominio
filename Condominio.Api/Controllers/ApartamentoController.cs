@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
+﻿using System.Collections.Generic;
 using Microsoft.AspNetCore.Mvc;
 using Condominio.Services.Contracts;
 using Condominio.Repository.Contracts;
@@ -17,43 +13,35 @@ namespace Condominio.Api.Controllers
         readonly IApartamentoServices _apartamentoServices;
         readonly IMainContext _mainContext;
 
-
         public ApartamentoController(IApartamentoServices apartamentoServices, IMainContext mainContext)
         {
             _apartamentoServices = apartamentoServices;
             _mainContext = mainContext;
         }
-
-        // GET: api/Apartamento
+                
         [HttpGet]
         public List<Apartamento> Get()
         {
             return _apartamentoServices.ListarTodosApartamentos();
         }
-
-        // GET: api/Apartamento/5
-        [HttpGet("{id}", Name = "Get")]
-        public string Get(long id)
+                
+        [HttpPost("post")]
+        public bool Post([FromBody]Apartamento apartamentoAdicionar)
         {
-            return "value";
+            return _apartamentoServices.AdicionarApartamento(apartamentoAdicionar);
         }
-
-        // POST: api/Apartamento
-        [HttpPost]
-        public void Post([FromBody] string value)
+        
+        [HttpPut("put")]
+        public bool Put([FromBody] Apartamento apartamentoAlterar)
         {
+            _mainContext.GetSet<Apartamento>().Attach(apartamentoAlterar);
+            return _apartamentoServices.AlterarApartamento(apartamentoAlterar);
         }
-
-        // PUT: api/Apartamento/5
-        [HttpPut("{id}")]
-        public void Put(int id, [FromBody] string value)
+                
+        [HttpDelete("delete/{id}")]
+        public bool Delete(long id)
         {
-        }
-
-        // DELETE: api/ApiWithActions/5
-        [HttpDelete("{id}")]
-        public void Delete(int id)
-        {
+            return _apartamentoServices.ExcluirApartamento(id);
         }
     }
 }
