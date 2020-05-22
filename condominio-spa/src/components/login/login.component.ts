@@ -1,8 +1,10 @@
+import { Login } from './../../models/login';
 import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { first } from 'rxjs/operators';
 import { AuthenticationService } from '../../services/authentication.service';
 import { FormGroup, FormControl } from '@angular/forms';
+
 
 @Component({
   selector: 'app-login',
@@ -12,19 +14,18 @@ import { FormGroup, FormControl } from '@angular/forms';
 export class LoginComponent implements OnInit {
   loading = false;  returnUrl: string;
   error = '';
-  username: string;
-  password: string;
   form: FormGroup = new FormGroup({
     username: new FormControl(''),
     password: new FormControl(''),
   });
+  loginModel: Login = new Login();
 
   constructor(
     private route: ActivatedRoute,
     private router: Router,
     private authenticationService: AuthenticationService) {
     if (this.authenticationService.currentUserValue) {
-        this.router.navigate(['/']);
+        this.router.navigate(['/apartamento']);
     }
   }
 
@@ -35,9 +36,10 @@ export class LoginComponent implements OnInit {
   login() {
     this.loading = true;
     this.error ='';
-
     if (this.form.valid) {
-    this.authenticationService.login(this.form.controls.username.value, this.form.controls.password.value).pipe(first())
+    this.loginModel.username = this.form.controls.username.value;
+    this.loginModel.password = this.form.controls.password.value;
+    this.authenticationService.login(this.loginModel).pipe(first())
     .subscribe(data => {
           this.router.navigate([this.returnUrl]);
         },

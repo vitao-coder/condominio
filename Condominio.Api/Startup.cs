@@ -14,7 +14,12 @@ using Microsoft.Extensions.Logging;
 using Condominio.Fixtures;
 using Microsoft.Extensions.PlatformAbstractions;
 using Microsoft.OpenApi.Models;
+using Condominio.Fixtures.Api;
 using System.IO;
+using System.Text;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.IdentityModel.Tokens;
+using Condominio.Api.Services;
 
 namespace Condominio.Api
 {
@@ -31,10 +36,11 @@ namespace Condominio.Api
 
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddCors();
             services.AddControllers()
                 .AddNewtonsoftJson(options =>options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore)
                 .AddControllersAsServices();
-            // Configurando o serviço de documentação do Swagger
+
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo()
@@ -42,6 +48,31 @@ namespace Condominio.Api
                     Title = "Condominio API 1.0",
                     Description = "Api para controle de moradores e apartamentos"                    
                 });
+
+                OpenApiSecurityScheme securityDefinition = new OpenApiSecurityScheme()
+                {
+                    Name = "Bearer",
+                    BearerFormat = "JWT",
+                    Scheme = "bearer",
+                    Description = "Specify the authorization token.",
+                    In = ParameterLocation.Header,
+                    Type = SecuritySchemeType.Http,
+                };
+                c.AddSecurityDefinition("jwt_auth", securityDefinition);
+
+                OpenApiSecurityScheme securityScheme = new OpenApiSecurityScheme()
+                {
+                    Reference = new OpenApiReference()
+                    {
+                        Id = "jwt_auth",
+                        Type = ReferenceType.SecurityScheme
+                    }
+                };
+                OpenApiSecurityRequirement securityRequirements = new OpenApiSecurityRequirement()
+                {
+                    {securityScheme, new string[] { }},
+                };
+                c.AddSecurityRequirement(securityRequirements);
                 string caminhoAplicacao =
                     PlatformServices.Default.Application.ApplicationBasePath;
                 string nomeAplicacao =
@@ -50,12 +81,40 @@ namespace Condominio.Api
                     Path.Combine(caminhoAplicacao, $"{nomeAplicacao}.xml");
                 c.IncludeXmlComments(caminhoXmlDoc);
             });
+
+            var appSettingsSection = Configuration.GetSection("AppSettings");
+            services.Configure<AppSettings>(appSettingsSection);
+                        
+            var appSettings = appSettingsSection.Get<AppSettings>();
+            var key = Encoding.ASCII.GetBytes(appSettings.Secret);
+
+            services.AddAuthentication(x =>
+            {
+                x.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+                x.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+                
+            })
+            .AddJwtBearer(x =>
+            {
+                x.RequireHttpsMetadata = false;
+                x.SaveToken = true;
+                x.TokenValidationParameters = new TokenValidationParameters
+                {
+                    ValidateIssuerSigningKey = true,
+                    IssuerSigningKey = new SymmetricSecurityKey(key),
+                    ValidateIssuer = false,
+                    ValidateAudience = false
+                };                
+            });
+
+            //services.AddScoped<IUserService, UserService>();
         }
 
         public void ConfigureContainer(ContainerBuilder builder)
         {
             builder = Ioc.RegisterIocMySqlRepository(builder);
             builder = Ioc.RegisterIocServices(builder);
+            builder.RegisterType<UserService>().As<IUserService>().InstancePerLifetimeScope();
         }
                 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
@@ -71,9 +130,15 @@ namespace Condominio.Api
             {
                 app.UseDeveloperExceptionPage();
             }
-
+            
             app.UseHttpsRedirection();
             app.UseRouting();
+            app.UseCors(x => x
+                .AllowAnyOrigin()
+                .AllowAnyMethod()
+                .AllowAnyHeader());            
+
+            app.UseAuthentication();
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>

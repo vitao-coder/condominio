@@ -3,9 +3,11 @@ using Microsoft.AspNetCore.Mvc;
 using Condominio.Services.Contracts;
 using Condominio.Repository.Contracts;
 using Condominio.Model;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Condominio.Api.Controllers
 {
+    
     [Route("api/[controller]")]
     [ApiController]
     public class ApartamentoController : ControllerBase
@@ -20,18 +22,21 @@ namespace Condominio.Api.Controllers
         }
                 
         [HttpGet]
+        [Authorize]
         public List<Apartamento> Get()
         {
             return _apartamentoServices.ListarTodosApartamentos();
         }
                 
         [HttpPost("post")]
+        [Authorize]
         public bool Post([FromBody]Apartamento apartamentoAdicionar)
         {
             return _apartamentoServices.AdicionarApartamento(apartamentoAdicionar);
         }
         
         [HttpPut("put")]
+        [Authorize]
         public bool Put([FromBody] Apartamento apartamentoAlterar)
         {
             _mainContext.GetSet<Apartamento>().Attach(apartamentoAlterar);
@@ -39,6 +44,7 @@ namespace Condominio.Api.Controllers
         }
                 
         [HttpDelete("delete/{id}")]
+        [Authorize]
         public bool Delete(long id)
         {
             return _apartamentoServices.ExcluirApartamento(id);

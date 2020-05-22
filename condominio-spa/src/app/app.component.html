@@ -1,2 +1,3 @@
 <app-nav-condominio *ngIf="currentUser" ></app-nav-condominio>
-<router-outlet></router-outlet>
+<app-login *ngIf="!currentUser"></app-login>
+<!--<router-outlet></router-outlet>-->
