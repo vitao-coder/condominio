@@ -1,5 +1,5 @@
-export class User {
-  id: number;
+import { BaseModel } from './basemodel';
+export class User extends BaseModel{
   firstName: string;
   lastName: string;
   username: string;
